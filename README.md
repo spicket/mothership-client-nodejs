@@ -1,6 +1,6 @@
 # mothership-client
 
-The official Node.js client for [Mothership][https://mothership.cloud].
+The official Node.js client for [Mothership](https://mothership.cloud).
 
 ## Installation
 ```
@@ -16,12 +16,12 @@ module should probably be one of the first things your code requires.
 
 Require the module, then initialize it using your environment key.
 
-    ```
-    const mothership = require('mothership-client');
-    const config = mothership.init({
-        key: '<config-key>'
-    });
-    ```
+```
+const mothership = require('mothership-client');
+const config = mothership.init({
+    key: '<config-key>'
+});
+```
 
 Then simply reference your config like: `config.someKey`;
 
