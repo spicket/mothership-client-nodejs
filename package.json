@@ -16,7 +16,7 @@
     "mothership"
   ],
   "author": "Mothership <hello@mothership.cloud>",
-  "license": "LicenseRef-LICENSE",
+  "license": "MIT",
   "bugs": {
     "url": "https://github.com/spicket/mothership-client-nodejs/issues"
   },
