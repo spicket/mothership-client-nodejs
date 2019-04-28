@@ -23,10 +23,12 @@
   "homepage": "https://github.com/spicket/mothership-client-nodejs#readme",
   "dependencies": {
     "debug": "^4.1.0",
+    "got": "^9.6.0",
+    "lodash": "^4.17.11",
     "sync-request": "^6.0.0"
   },
   "devDependencies": {
-    "ava": "^0.25.0",
+    "ava": "^1.4.1",
     "body-parser": "^1.18.3",
     "express": "^4.16.4",
     "morgan": "^1.9.1",
