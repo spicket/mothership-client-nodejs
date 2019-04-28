@@ -19,25 +19,61 @@ test.before(t => {
     });
 });
 
-test('Retrieve a good config', t => {
+test('(sync) Retrieve a good config on init', t => {
     t.plan(1);
 
-    client.init({
+    let config = client.init({
         key: 'good-config-key'
-    });
+    }, { sync: true });
+
+    t.is(config.someKey, 'someVal');
+});
+
+test('(sync) Retrieve a good config', t => {
+    t.plan(1);
+
+    client.init('good-config-key', { sync: true });
 
     let config = client.get();
 
     t.is(config.someKey, 'someVal');
 });
 
-test('Throw on a bad config key', t => {
+test('(sync) Throw on a bad config key', t => {
     t.plan(2);
     
     t.throws(() => {
-        client.init({
-            key: 'bad-config-key'
-        });
+        client.init('bad-config-key', { sync: true });
+    });
+    
+    t.is(client.get(), null);
+});
+
+test('(async) Retrieve a good config on init', async t => {
+    t.plan(1);
+
+    let config = await client.init({
+        key: 'good-config-key'
+    });
+
+    t.is(config.someKey, 'someVal');
+});
+
+test('(async) Retrieve a good config', async t => {
+    t.plan(1);
+
+    await client.init('good-config-key');
+
+    let config = client.get();
+
+    t.is(config.someKey, 'someVal');
+});
+
+test.serial('(async) Throw on a bad config key', async t => {
+    t.plan(2);
+    
+    await t.throwsAsync(async () => {
+        await client.init('bad-config-key');
     });
     
     t.is(client.get(), null);
