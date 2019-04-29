@@ -79,6 +79,14 @@ test.serial('(async) Throw on a bad config key', async t => {
     t.is(client.get(), null);
 });
 
+test('Get config sub-key using dotted-notation', async t => {
+    t.plan(1);
+
+    await client.init('good-config-key');
+
+    t.is(client.get('some.sub.key'), 'a subkey');
+})
+
 test.after.always(t => {
     t.log('Stopping server');
     server.send('stop');

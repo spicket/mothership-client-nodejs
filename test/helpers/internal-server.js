@@ -39,7 +39,12 @@ app.get('/api/configs/retrieve', (req, res) => {
     
     if (req.get('x-config-key') === 'good-config-key') {
         return res.status(200).send({
-            someKey: 'someVal'
+            someKey: 'someVal',
+            some: {
+              sub: {
+                key: 'a subkey'
+              }
+            }
         });
     }
     
