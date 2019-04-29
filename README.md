@@ -1,5 +1,7 @@
 # mothership-client
 
+[![Greenkeeper badge](https://badges.greenkeeper.io/spicket/mothership-client-nodejs.svg)](https://greenkeeper.io/)
+
 The official Node.js client for [Mothership](https://mothership.cloud).
 
 ## Installation
