@@ -39,6 +39,7 @@ app.get('/api/configs/retrieve', (req, res) => {
     
     if (req.get('x-config-key') === 'good-config-key') {
         return res.status(200).send({
+            timestamp: Date.now(),
             someKey: 'someVal',
             some: {
               sub: {

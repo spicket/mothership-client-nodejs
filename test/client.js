@@ -1,4 +1,6 @@
 const test = require('ava');
+const path = require('path');
+const delay = require('delay');
 
 process.env.MOTHERSHIP_BASE_URL = 'http://localhost:3030';
 const client = require('../');
@@ -19,47 +21,17 @@ test.before(t => {
     });
 });
 
-test('(sync) Retrieve a good config on init', t => {
-    t.plan(1);
-
-    let config = client.init({
-        key: 'good-config-key'
-    }, { sync: true });
-
-    t.is(config.someKey, 'someVal');
-});
-
-test('(sync) Retrieve a good config', t => {
-    t.plan(1);
-
-    client.init('good-config-key', { sync: true });
-
-    let config = client.get();
-
-    t.is(config.someKey, 'someVal');
-});
-
-test('(sync) Throw on a bad config key', t => {
-    t.plan(2);
-    
-    t.throws(() => {
-        client.init('bad-config-key', { sync: true });
-    });
-    
-    t.is(client.get(), null);
-});
-
-test('(async) Retrieve a good config on init', async t => {
+test('Retrieve a good config on init', async t => {
     t.plan(1);
 
     let config = await client.init({
         key: 'good-config-key'
     });
 
-    t.is(config.someKey, 'someVal');
+    t.is(config.get('someKey'), 'someVal');
 });
 
-test('(async) Retrieve a good config', async t => {
+test('Retrieve the entire config', async t => {
     t.plan(1);
 
     await client.init('good-config-key');
@@ -69,14 +41,12 @@ test('(async) Retrieve a good config', async t => {
     t.is(config.someKey, 'someVal');
 });
 
-test.serial('(async) Throw on a bad config key', async t => {
+test.serial('Throw on a bad config key', async t => {
     t.plan(2);
     
-    await t.throwsAsync(async () => {
-        await client.init('bad-config-key');
-    });
+    await t.throwsAsync(async () => client.init('bad-config-key'));
     
-    t.is(client.get(), null);
+    t.throws(client.get);
 });
 
 test('Get config sub-key using dotted-notation', async t => {
@@ -85,7 +55,39 @@ test('Get config sub-key using dotted-notation', async t => {
     await client.init('good-config-key');
 
     t.is(client.get('some.sub.key'), 'a subkey');
-})
+});
+
+test('Get auth key from file', async t => {
+    t.plan(1);
+
+    let keyPath = path.resolve(path.join(__dirname, './helpers/secret_key_file'));
+    t.log(keyPath);
+    await client.init({ keyPath });
+
+    t.notThrows(client.get);
+});
+
+test('Handle missing auth key file', async t => {
+    t.plan(1);
+
+    let keyPath = path.resolve(path.join(__dirname, './helpers/missing_key_file'));
+    await t.throwsAsync(async () => await client.init({ keyPath }));
+});
+
+test.serial('Refresh config periodically', async t => {
+    t.plan(1);
+
+    await client.init({
+        key: 'good-config-key',
+        refreshInterval: 10 // seconds
+    });
+
+    let firstTs = client.get('timestamp');
+
+    t.timeout(50000);   // ms
+    await delay(12000);
+    t.true(client.get('timestamp') > firstTs);    
+});
 
 test.after.always(t => {
     t.log('Stopping server');
