@@ -21,7 +21,7 @@ test.before(t => {
     });
 });
 
-test('Retrieve a good config on init', async t => {
+test.serial('Retrieve a good config on init', async t => {
     t.plan(1);
 
     let config = await client.init({
@@ -31,7 +31,7 @@ test('Retrieve a good config on init', async t => {
     t.is(config.get('someKey'), 'someVal');
 });
 
-test('Retrieve the entire config', async t => {
+test.serial('Retrieve the entire config', async t => {
     t.plan(1);
 
     await client.init('good-config-key');
@@ -39,6 +39,18 @@ test('Retrieve the entire config', async t => {
     let config = client.get();
 
     t.is(config.someKey, 'someVal');
+});
+
+test.serial('Don\'t throw if config fetch fails, but one is in cache', async t => {
+    t.plan(1);
+
+    try {
+        await client._fetchConfig('/bad/url', {});
+        let config = client.get();
+        t.is(config.someKey, 'someVal');
+    } catch (err) {
+        t.fail(err);
+    }
 });
 
 test.serial('Throw on a bad config key', async t => {
@@ -49,7 +61,7 @@ test.serial('Throw on a bad config key', async t => {
     t.throws(client.get);
 });
 
-test('Get config sub-key using dotted-notation', async t => {
+test.serial('Get config sub-key using dotted-notation', async t => {
     t.plan(1);
 
     await client.init('good-config-key');
@@ -57,7 +69,7 @@ test('Get config sub-key using dotted-notation', async t => {
     t.is(client.get('some.sub.key'), 'a subkey');
 });
 
-test('Get auth key from file', async t => {
+test.serial('Get auth key from file', async t => {
     t.plan(1);
 
     let keyPath = path.resolve(path.join(__dirname, './helpers/secret_key_file'));
@@ -67,7 +79,7 @@ test('Get auth key from file', async t => {
     t.notThrows(client.get);
 });
 
-test('Handle missing auth key file', async t => {
+test.serial('Handle missing auth key file', async t => {
     t.plan(1);
 
     let keyPath = path.resolve(path.join(__dirname, './helpers/missing_key_file'));
