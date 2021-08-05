@@ -10,13 +10,13 @@ npm i mothership-client
 ```
 
 ## Requirements
-- Node.js >= 8.x
+- Node.js >= 10.x
 
 ## Usage
 
 > If you're upgrading from v1.x or v2.x, see the [upgrading](#upgrading) section at the bottom of this doc.
 
-Since most configuration values are needed during intial bootstrap of an app, this
+Since initial bootstrap of an app requires most configuration values, this
 module should probably be one of the first things your code requires.
 
 Require the module, then initialize it using your environment key.
