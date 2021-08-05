@@ -1,9 +1,11 @@
 {
   "name": "mothership-client",
-  "version": "3.0.0",
+  "version": "3.1.0",
   "description": "Node.js client for loading config data from Mothership",
   "main": "index.js",
-  "engines": { "node" : ">=10" },
+  "engines": {
+    "node": ">=10"
+  },
   "scripts": {
     "test": "DEBUG=mothership nyc --check-coverage ava --serial --timeout=15s"
   },
