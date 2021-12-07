@@ -4,7 +4,7 @@
   "description": "Node.js client for loading config data from Mothership",
   "main": "index.js",
   "engines": {
-    "node": ">=10"
+    "node": ">=12"
   },
   "scripts": {
     "test": "DEBUG=mothership MOTHERSHIP_BASE_URL=http://localhost:3030 nyc --check-coverage ava --serial --timeout=15s"
