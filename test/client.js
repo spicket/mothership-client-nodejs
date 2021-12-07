@@ -54,11 +54,9 @@ test.serial('Don\'t throw if config fetch fails, but one is in cache', async t =
 });
 
 test.serial('Throw on a bad config key', async t => {
-    t.plan(2);
+    t.plan(1);
     
     await t.throwsAsync(async () => client.init('bad-config-key'));
-    
-    t.throws(client.get);
 });
 
 test.serial('Get config sub-key using dotted-notation', async t => {
@@ -89,16 +87,16 @@ test.serial('Handle missing auth key file', async t => {
 test.serial('Refresh config periodically', async t => {
     t.plan(1);
 
-    await client.init({
+    let newClient = await client.init({
         key: 'good-config-key',
         refreshInterval: 10 // seconds
     });
 
-    let firstTs = client.get('timestamp');
+    let firstTs = newClient.get('timestamp');
 
     t.timeout(50000);   // ms
     await delay(12000);
-    t.true(client.get('timestamp') > firstTs);    
+    t.true(newClient.get('timestamp') > firstTs);    
 });
 
 test.after.always(t => {

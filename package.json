@@ -7,7 +7,7 @@
     "node": ">=10"
   },
   "scripts": {
-    "test": "DEBUG=mothership nyc --check-coverage ava --serial --timeout=15s"
+    "test": "DEBUG=mothership MOTHERSHIP_BASE_URL=http://localhost:3030 nyc --check-coverage ava --serial --timeout=15s"
   },
   "repository": {
     "type": "git",
