@@ -91,3 +91,6 @@ If you want to use sync mode, pass a second argument during initialization:
 ```
 const config = mothership.init('<config-key>', { sync: true });
 ```
+
+### To v4.x
+The release of v4.x provides the ability to for you to instantiate multiple instances of Mothership within a single Node app. You can call `mothership.init()` multiple times, passing in different API keys and options each time. Each call to the `init()` method will return an instance of mothership with the usual `get()` method to get the config scoped to that particular instance.
