@@ -1,6 +1,6 @@
 {
   "name": "mothership-client",
-  "version": "3.1.0",
+  "version": "4.0.0",
   "description": "Node.js client for loading config data from Mothership",
   "main": "index.js",
   "engines": {
